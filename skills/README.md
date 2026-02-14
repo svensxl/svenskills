@@ -10,9 +10,13 @@ This directory contains custom Agent Skills that follow the Anthropic Agent Skil
 
 ## Available Skills
 
-### Example Skills
+### Text Processing
 
 - **[example-text-formatter](./example-text-formatter/)**: Formats text in various styles (uppercase, lowercase, title case, sentence case)
+
+### Productivity
+
+- **[meeting-notes-organizer](./meeting-notes-organizer/)**: Organizes and structures meeting notes with action items, decisions, and key points
 
 ## Directory Structure
 
@@ -63,9 +67,13 @@ Skills can be organized by category. Suggested categories include:
 
 ## 可用技能
 
-### 示例技能
+### 文本处理
 
 - **[example-text-formatter](./example-text-formatter/)**：以各种样式格式化文本（大写、小写、标题大小写、句子大小写）
+
+### 生产力
+
+- **[meeting-notes-organizer](./meeting-notes-organizer/)**：组织和构建会议笔记，包括行动项、决策和要点
 
 ## 目录结构
 
