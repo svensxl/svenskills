@@ -197,6 +197,16 @@ No external dependencies required. Works with standard text processing.
 - Action items without owners are marked as "Owner: TBD"
 - Deadlines marked as "Due: TBD" if not specified
 
+### Handling Incomplete Information
+
+When input data is missing or incomplete:
+- Date/time fields show "Not specified" when unavailable
+- Attendee list shows "Not specified" if not mentioned
+- Action items without clear owners are marked as "Owner: TBD"
+- The skill prioritizes clarity over inference - it will not guess missing information
+- All available information is preserved and structured appropriately
+- Missing data is clearly indicated to prompt follow-up
+
 ### Customization
 
 The output format can be adjusted based on organizational needs:
