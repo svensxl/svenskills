@@ -99,6 +99,12 @@ git clone --depth=1 https://github.com/zsh-users/zsh-history-substring-search \
 
 #### 步骤 7：配置 .zshrc
 
+确保 `.zshrc` 中包含 `ZSH` 环境变量（需在 `source` 之前）：
+
+```bash
+export ZSH="$HOME/.oh-my-zsh"
+```
+
 将 `ZSH_THEME` 修改为 Powerlevel10k：
 
 ```bash
@@ -124,6 +130,14 @@ plugins=(
   zoxide
 )
 ```
+
+在 `plugins` 配置之后，添加 `source` 命令以加载 Oh My Zsh：
+
+```bash
+source $ZSH/oh-my-zsh.sh
+```
+
+> **注意**：`source $ZSH/oh-my-zsh.sh` 必须放在 `plugins=(...)` 之后，因为 Oh My Zsh 在加载时会读取 plugins 变量来决定启用哪些插件。
 
 #### 步骤 8：重启终端并配置 p10k
 

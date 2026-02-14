@@ -83,6 +83,23 @@ for plugin in "${!PLUGINS_REPO[@]}"; do
 done
 
 # ---------- 步骤 7：配置 .zshrc ----------
+
+# 配置 ZSH 环境变量
+if grep -q '^export ZSH=' "$HOME/.zshrc" 2>/dev/null; then
+  info "ZSH 环境变量已配置，跳过。"
+else
+  # 在文件开头添加（如果有 ZSH_THEME 则插入在其前面，否则追加到文件末尾）
+  if grep -q '^ZSH_THEME=' "$HOME/.zshrc" 2>/dev/null; then
+    sed -i '' '/^ZSH_THEME=/i\
+export ZSH="$HOME/.oh-my-zsh"\
+' "$HOME/.zshrc"
+  else
+    echo 'export ZSH="$HOME/.oh-my-zsh"' >> "$HOME/.zshrc"
+  fi
+  info "已添加 export ZSH 环境变量配置。"
+fi
+
+# 配置 ZSH_THEME
 if grep -q 'ZSH_THEME="powerlevel10k/powerlevel10k"' "$HOME/.zshrc" 2>/dev/null; then
   info ".zshrc 中 ZSH_THEME 已设置为 powerlevel10k，跳过。"
 else
@@ -125,6 +142,15 @@ else
     echo "$TARGET_PLUGINS" >> "$HOME/.zshrc"
     info "已在 .zshrc 末尾添加 plugins 配置。"
   fi
+fi
+
+# 配置 source oh-my-zsh.sh（必须在 plugins 之后）
+if grep -q 'source $ZSH/oh-my-zsh.sh' "$HOME/.zshrc" 2>/dev/null || grep -q 'source "$ZSH/oh-my-zsh.sh"' "$HOME/.zshrc" 2>/dev/null; then
+  info "source oh-my-zsh.sh 已配置，跳过。"
+else
+  echo '' >> "$HOME/.zshrc"
+  echo 'source $ZSH/oh-my-zsh.sh' >> "$HOME/.zshrc"
+  info "已在 plugins 配置之后添加 source \$ZSH/oh-my-zsh.sh。"
 fi
 
 # ---------- 完成提示 ----------
