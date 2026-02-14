@@ -115,6 +115,9 @@ dependencies:
 ## Field Selection Guidelines
 
 ### Minimal Skill (Beginner)
+
+This is the absolute minimum required for a valid skill. While functional, adding tags and triggers (shown in Standard Skill below) is **strongly recommended** for better discoverability and usability.
+
 ```yaml
 ---
 name: my-skill
@@ -277,6 +280,9 @@ dependencies:
 ## 字段选择指南
 
 ### 最小技能（初学者）
+
+这是有效技能所需的绝对最小值。虽然可用，但**强烈建议**添加标签和触发器（如下面的标准技能所示）以获得更好的可发现性和可用性。
+
 ```yaml
 ---
 name: my-skill
