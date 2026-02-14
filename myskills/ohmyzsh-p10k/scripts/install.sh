@@ -3,6 +3,9 @@
 # 用法: bash install.sh
 set -euo pipefail
 
+# 确保 ZSH_CUSTOM 有默认值（兼容 set -u，避免 zsh 下 unbound variable）
+ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}"
+
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -42,7 +45,7 @@ else
 fi
 
 # ---------- 步骤 4：安装 Powerlevel10k ----------
-P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+P10K_DIR="$ZSH_CUSTOM/themes/powerlevel10k"
 if [[ -d "$P10K_DIR" ]]; then
   info "Powerlevel10k 已安装，跳过。"
 else
@@ -63,40 +66,38 @@ for tool in eza zoxide; do
 done
 
 # ---------- 步骤 6：安装第三方 zsh 插件 ----------
-ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-
-declare -A PLUGINS_REPO=(
-  [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions"
-  [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-  [zsh-history-substring-search]="https://github.com/zsh-users/zsh-history-substring-search"
-)
-
-for plugin in "${!PLUGINS_REPO[@]}"; do
-  PLUGIN_DIR="$ZSH_CUSTOM_DIR/plugins/$plugin"
-  if [[ -d "$PLUGIN_DIR" ]]; then
-    info "插件 $plugin 已安装，跳过。"
+install_plugin() {
+  local name="$1"
+  local url="$2"
+  local dir="$ZSH_CUSTOM/plugins/$name"
+  if [[ -d "$dir" ]]; then
+    info "插件 $name 已安装，跳过。"
   else
-    info "正在安装插件 $plugin ..."
-    git clone --depth=1 "${PLUGINS_REPO[$plugin]}" "$PLUGIN_DIR"
-    info "插件 $plugin 安装完成。"
+    info "正在安装插件 $name ..."
+    git clone --depth=1 "$url" "$dir"
+    info "插件 $name 安装完成。"
   fi
-done
+}
+
+install_plugin "zsh-autosuggestions"          "https://github.com/zsh-users/zsh-autosuggestions"
+install_plugin "zsh-syntax-highlighting"      "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
 
 # ---------- 步骤 7：配置 .zshrc ----------
 
-# 配置 ZSH 环境变量
-if grep -q '^export ZSH=' "$HOME/.zshrc" 2>/dev/null; then
-  info "ZSH 环境变量已配置，跳过。"
+# 配置 OHMYZSH_HOME 环境变量
+if grep -q '^export OHMYZSH_HOME=' "$HOME/.zshrc" 2>/dev/null; then
+  info "OHMYZSH_HOME 环境变量已配置，跳过。"
 else
   # 在文件开头添加（如果有 ZSH_THEME 则插入在其前面，否则追加到文件末尾）
   if grep -q '^ZSH_THEME=' "$HOME/.zshrc" 2>/dev/null; then
     sed -i '' '/^ZSH_THEME=/i\
-export ZSH="$HOME/.oh-my-zsh"\
+export OHMYZSH_HOME="$HOME/.oh-my-zsh"\
 ' "$HOME/.zshrc"
   else
-    echo 'export ZSH="$HOME/.oh-my-zsh"' >> "$HOME/.zshrc"
+    echo 'export OHMYZSH_HOME="$HOME/.oh-my-zsh"' >> "$HOME/.zshrc"
   fi
-  info "已添加 export ZSH 环境变量配置。"
+  info "已添加 export OHMYZSH_HOME 环境变量配置。"
 fi
 
 # 配置 ZSH_THEME
@@ -145,12 +146,12 @@ else
 fi
 
 # 配置 source oh-my-zsh.sh（必须在 plugins 之后）
-if grep -q 'source $ZSH/oh-my-zsh.sh' "$HOME/.zshrc" 2>/dev/null || grep -q 'source "$ZSH/oh-my-zsh.sh"' "$HOME/.zshrc" 2>/dev/null; then
+if grep -q 'source $OHMYZSH_HOME/oh-my-zsh.sh' "$HOME/.zshrc" 2>/dev/null || grep -q 'source "$OHMYZSH_HOME/oh-my-zsh.sh"' "$HOME/.zshrc" 2>/dev/null; then
   info "source oh-my-zsh.sh 已配置，跳过。"
 else
   echo '' >> "$HOME/.zshrc"
-  echo 'source $ZSH/oh-my-zsh.sh' >> "$HOME/.zshrc"
-  info "已在 plugins 配置之后添加 source \$ZSH/oh-my-zsh.sh。"
+  echo 'source $OHMYZSH_HOME/oh-my-zsh.sh' >> "$HOME/.zshrc"
+  info "已在 plugins 配置之后添加 source \$OHMYZSH_HOME/oh-my-zsh.sh。"
 fi
 
 # ---------- 完成提示 ----------
