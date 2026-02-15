@@ -27,7 +27,31 @@ else
   info "Homebrew 安装完成。"
 fi
 
-# ---------- 步骤 2：安装 Node.js ----------
+# ---------- 步骤 2：安装 iTerm2 ----------
+if brew list --cask iterm2 &>/dev/null; then
+  info "iTerm2 已安装，跳过。"
+else
+  info "正在安装 iTerm2 ..."
+  brew install --cask iterm2
+  info "iTerm2 安装完成。"
+fi
+
+# 下载并安装 iTerm2 AI 插件
+ITERM_AI_APP="/Applications/iTermAI.app"
+if [[ -d "$ITERM_AI_APP" ]]; then
+  info "iTerm2 AI 插件已安装，跳过。"
+else
+  info "正在下载 iTerm2 AI 插件 ..."
+  ITERM_AI_TMP="$(mktemp -d)"
+  curl -fsSL -o "${ITERM_AI_TMP}/iTermAI.zip" \
+    "https://github.com/gnachman/iterm2-website/raw/refs/heads/master/downloads/ai-plugin/iTermAI-1.1.zip"
+  unzip -q "${ITERM_AI_TMP}/iTermAI.zip" -d "${ITERM_AI_TMP}"
+  mv "${ITERM_AI_TMP}/iTermAI.app" /Applications/
+  rm -rf "${ITERM_AI_TMP}"
+  info "iTerm2 AI 插件已安装到 /Applications/iTermAI.app。"
+fi
+
+# ---------- 步骤 3：安装 Node.js ----------
 if command -v node >/dev/null 2>&1; then
   info "Node.js 已安装（$(node --version)），跳过。"
 else
@@ -36,7 +60,7 @@ else
   info "Node.js 安装完成。"
 fi
 
-# ---------- 步骤 3：安装 NVM ----------
+# ---------- 步骤 4：安装 NVM ----------
 if brew list nvm &>/dev/null; then
   info "NVM 已安装，跳过。"
 else
@@ -45,7 +69,7 @@ else
   info "NVM 安装完成。"
 fi
 
-# ---------- 步骤 4：安装 Maven ----------
+# ---------- 步骤 5：安装 Maven ----------
 if command -v mvn >/dev/null 2>&1; then
   info "Maven 已安装，跳过。"
 else
@@ -54,7 +78,7 @@ else
   info "Maven 安装完成。"
 fi
 
-# ---------- 步骤 5：安装 OpenJDK 21 ----------
+# ---------- 步骤 6：安装 OpenJDK 21 ----------
 # 先检测系统是否已有 Java 21（无论通过何种方式安装）
 JAVA_21_INSTALLED=false
 if command -v java >/dev/null 2>&1; then
@@ -89,7 +113,7 @@ else
   info "已将 OpenJDK 21 路径加入 ~/.zshrc。"
 fi
 
-# ---------- 步骤 6：安装 OpenCode ----------
+# ---------- 步骤 7：安装 OpenCode ----------
 if command -v opencode >/dev/null 2>&1; then
   info "OpenCode 已安装，跳过。"
 else
@@ -98,7 +122,7 @@ else
   info "OpenCode 安装完成。"
 fi
 
-# ---------- 步骤 7：安装 Codex CLI ----------
+# ---------- 步骤 8：安装 Codex CLI ----------
 if command -v codex >/dev/null 2>&1; then
   info "Codex CLI 已安装，跳过。"
 else
@@ -110,7 +134,7 @@ else
   info "Codex CLI 安装完成。"
 fi
 
-# ---------- 步骤 8：安装 Claude Code ----------
+# ---------- 步骤 9：安装 Claude Code ----------
 if command -v claude >/dev/null 2>&1; then
   info "Claude Code 已安装，跳过。"
 else
@@ -123,9 +147,9 @@ fi
 echo ""
 info "=========================================="
 info "  所有工具安装完成！"
-info "  已安装：Homebrew, Node.js, NVM, Maven,"
-info "          OpenJDK 21, OpenCode, Codex CLI,"
-info "          Claude Code"
+info "  已安装：Homebrew, iTerm2 + AI 插件,"
+info "          Node.js, NVM, Maven, OpenJDK 21,"
+info "          OpenCode, Codex CLI, Claude Code"
 info ""
 info "  请运行 source ~/.zshrc 或重启终端"
 info "  以使 PATH 配置生效。"

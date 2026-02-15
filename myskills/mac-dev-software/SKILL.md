@@ -1,6 +1,6 @@
 ---
 name: mac-dev-software
-description: 在 macOS 上一键安装常用 AI coding agent 和开发工具。当用户需要配置 macOS 开发环境、安装 Homebrew、Node.js、NVM、Maven、OpenJDK、OpenCode、Codex CLI、Claude Code 等工具时使用此 skill。
+description: 在 macOS 上一键安装常用 AI coding agent 和开发工具。当用户需要配置 macOS 开发环境、安装 Homebrew、iTerm2、Node.js、NVM、Maven、OpenJDK、OpenCode、Codex CLI、Claude Code 等工具时使用此 skill。
 ---
 
 # macOS AI Coding Agent 及开发工具安装指南
@@ -9,16 +9,17 @@ description: 在 macOS 上一键安装常用 AI coding agent 和开发工具。�
 
 ## 安装软件清单
 
-| 软件        | 说明                        |
-| ----------- | --------------------------- |
-| Homebrew    | macOS 包管理器              |
-| Node.js     | JavaScript 运行时           |
-| NVM         | Node 版本管理器             |
-| Maven       | Java 项目构建工具           |
-| OpenJDK 21  | Java 21 开发环境            |
-| OpenCode    | AI coding agent             |
-| Codex CLI   | OpenAI Codex 命令行工具     |
-| Claude Code | Anthropic Claude 命令行工具 |
+| 软件             | 说明                        |
+| ---------------- | --------------------------- |
+| Homebrew         | macOS 包管理器              |
+| iTerm2 + AI 插件 | 增强型终端 + AI 辅助插件    |
+| Node.js          | JavaScript 运行时           |
+| NVM              | Node 版本管理器             |
+| Maven            | Java 项目构建工具           |
+| OpenJDK 21       | Java 21 开发环境            |
+| OpenCode         | AI coding agent             |
+| Codex CLI        | OpenAI Codex 命令行工具     |
+| Claude Code      | Anthropic Claude 命令行工具 |
 
 ## 安装流程
 
@@ -40,7 +41,22 @@ bash scripts/install.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-#### 步骤 2：安装 Node.js 及 NVM
+#### 步骤 2：安装 iTerm2 及 AI 插件
+
+```bash
+brew install --cask iterm2
+```
+
+下载并安装 AI 插件：
+
+```bash
+curl -fsSL -o /tmp/iTermAI.zip \
+  "https://github.com/gnachman/iterm2-website/raw/refs/heads/master/downloads/ai-plugin/iTermAI-1.1.zip"
+unzip -q /tmp/iTermAI.zip -d /tmp
+mv /tmp/iTermAI.app /Applications/
+```
+
+#### 步骤 3：安装 Node.js 及 NVM
 
 ```bash
 brew install node
@@ -49,7 +65,7 @@ brew install nvm
 
 安装 NVM 后需按照 brew 输出的提示配置环境变量。
 
-#### 步骤 3：安装 Maven 和 OpenJDK 21
+#### 步骤 4：安装 Maven 和 OpenJDK 21
 
 ```bash
 brew install mvn
@@ -64,19 +80,19 @@ echo 'export PATH="/usr/local/opt/openjdk@21/bin:$PATH"' >> ~/.zshrc
 
 > **注意**：Apple Silicon Mac 上路径为 `/opt/homebrew/opt/openjdk@21/bin`，脚本会自动适配。
 
-#### 步骤 4：安装 OpenCode
+#### 步骤 5：安装 OpenCode
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
 ```
 
-#### 步骤 5：安装 Codex CLI
+#### 步骤 6：安装 Codex CLI
 
 ```bash
 npm i -g @openai/codex
 ```
 
-#### 步骤 6：安装 Claude Code
+#### 步骤 7：安装 Claude Code
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
