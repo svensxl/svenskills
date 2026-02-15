@@ -83,6 +83,47 @@ install_plugin "zsh-autosuggestions"          "https://github.com/zsh-users/zsh-
 install_plugin "zsh-syntax-highlighting"      "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
 
+# ---------- 可选：批量导入 iTerm2 颜色主题 ----------
+# 使用方式：INSTALL_ITERM2_THEMES=1 bash scripts/install.sh
+if [[ "${INSTALL_ITERM2_THEMES:-0}" == "1" ]]; then
+  SCHEMES_DIR="$HOME/iTerm2-Color-Schemes"
+  if [[ -d "$SCHEMES_DIR/.git" ]]; then
+    info "iTerm2-Color-Schemes 已存在，跳过克隆。"
+  else
+    info "正在克隆 iTerm2-Color-Schemes ..."
+    git clone --depth=1 https://github.com/mbadolato/iTerm2-Color-Schemes.git "$SCHEMES_DIR"
+  fi
+
+  info "正在批量导入 iTerm2 颜色主题 ..."
+  (
+    cd "$SCHEMES_DIR"
+    ./tools/import-scheme.sh \
+      "schemes/Dracula.itermcolors" \
+      "schemes/Dracula+.itermcolors" \
+      "schemes/Catppuccin Mocha.itermcolors" \
+      "schemes/Catppuccin Macchiato.itermcolors" \
+      "schemes/Gruvbox Dark.itermcolors" \
+      "schemes/Gruvbox Material Dark.itermcolors" \
+      "schemes/Solarized Dark Higher Contrast.itermcolors" \
+      "schemes/iTerm2 Solarized Dark.itermcolors" \
+      "schemes/Night Owl.itermcolors" \
+      "schemes/TokyoNight Storm.itermcolors" \
+      "schemes/TokyoNight Night.itermcolors" \
+      "schemes/Nord.itermcolors" \
+      "schemes/Nord Wave.itermcolors" \
+      "schemes/One Dark Two.itermcolors" \
+      "schemes/One Half Dark.itermcolors" \
+      "schemes/Ayu Mirage.itermcolors" \
+      "schemes/Snazzy.itermcolors" \
+      "schemes/Everforest Dark Hard.itermcolors" \
+      "schemes/Kanagawa Wave.itermcolors" \
+      "schemes/Rose Pine Moon.itermcolors"
+  )
+  info "iTerm2 颜色主题导入完成。"
+else
+  warn "已跳过 iTerm2 颜色主题导入。需要时可使用 INSTALL_ITERM2_THEMES=1 重新运行安装脚本。"
+fi
+
 # ---------- 步骤 7：配置 .zshrc ----------
 
 # 配置 OHMYZSH_HOME 环境变量
