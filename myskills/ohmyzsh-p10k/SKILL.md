@@ -170,31 +170,12 @@ p10k configure
 ```bash
 git clone --depth=1 https://github.com/mbadolato/iTerm2-Color-Schemes.git ~/iTerm2-Color-Schemes
 cd ~/iTerm2-Color-Schemes
-
-./tools/import-scheme.sh \
-  "schemes/Dracula.itermcolors" \
-  "schemes/Dracula+.itermcolors" \
-  "schemes/Catppuccin Mocha.itermcolors" \
-  "schemes/Catppuccin Macchiato.itermcolors" \
-  "schemes/Gruvbox Dark.itermcolors" \
-  "schemes/Gruvbox Material Dark.itermcolors" \
-  "schemes/Solarized Dark Higher Contrast.itermcolors" \
-  "schemes/iTerm2 Solarized Dark.itermcolors" \
-  "schemes/Night Owl.itermcolors" \
-  "schemes/TokyoNight Storm.itermcolors" \
-  "schemes/TokyoNight Night.itermcolors" \
-  "schemes/Nord.itermcolors" \
-  "schemes/Nord Wave.itermcolors" \
-  "schemes/One Dark Two.itermcolors" \
-  "schemes/One Half Dark.itermcolors" \
-  "schemes/Ayu Mirage.itermcolors" \
-  "schemes/Snazzy.itermcolors" \
-  "schemes/Everforest Dark Hard.itermcolors" \
-  "schemes/Kanagawa Wave.itermcolors" \
-  "schemes/Rose Pine Moon.itermcolors"
+./tools/import-scheme.sh <预置主题列表，见 scripts/install.sh>
 ```
 
-导入完成后可在 iTerm2 中选择主题：`Preferences → Profiles → Colors → Color Presets`。
+预置主题：Dracula、Dracula+、Catppuccin Mocha、Catppuccin Macchiato、Gruvbox Dark、Gruvbox Material Dark、Solarized Dark Higher Contrast、iTerm2 Solarized Dark、Night Owl、TokyoNight Storm、TokyoNight Night、Nord、Nord Wave、One Dark Two、One Half Dark、Ayu Mirage、Snazzy、Everforest Dark Hard、Kanagawa Wave、Rose Pine Moon。
+
+导入完成后可在 iTerm2 中选择主题：`Preferences → Profiles → Colors → Color Presets`。完整导入参数以 `scripts/install.sh` 为准。
 
 ### 可选：安装 Powerline 字体（仅在使用 agnoster 等旧主题时需要）
 
